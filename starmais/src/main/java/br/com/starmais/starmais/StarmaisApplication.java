@@ -1,31 +1,29 @@
 package br.com.starmais.starmais;
 
-import br.com.starmais.model.DadosSerie;
-import br.com.starmais.service.ConsumoAPI;
-import br.com.starmais.service.ConverteDados;
+import br.com.starmais.main.Main;
+import br.com.starmais.repository.SerieRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+
 
 @SpringBootApplication
-public class StarmaisApplication implements CommandLineRunner {
+@EntityScan(basePackages = "br.com.starmais.model")
+@ComponentScan(basePackages = "br.com.starmais")
+@EnableJpaRepositories(basePackages = "br.com.starmais.repository")
+public class StarmaisApplication {
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(StarmaisApplication.class, args);
 	}
-
-	@Override
-	public void run(String... args) throws Exception {
-		ConsumoAPI consumoAPI = new ConsumoAPI();
-
-		var json =  consumoAPI.obterDados("https://www.omdbapi.com/?t=gilmore+girls&apikey=6585022c");
-		System.out.println(json);
-		ConverteDados conversor = new ConverteDados();
-
-		DadosSerie dados = conversor.obterDados(json, DadosSerie.class);
-
-		System.out.println(dados);
-
-
-	}
 }
+
+
+
+
+
